@@ -67,3 +67,16 @@ http://localhost:5555/
 ![npm run dev](./img/9.png)
 
 _The "Cannot GET /" error in Express typically indicates that there is no defined route for the requested URL, and you need to ensure that your routes are properly set up in your Express application._
+
+> Step 8: Update your index.js with the code below ad run `npm run dev` again:
+
+```
+app.get('/', (request, response) => {
+  console.log(request);
+  return response.status(200).send('Welcome To MERN Stack Tutorial');
+});
+
+```
+![npm run dev](./img/10.png)
+
+_The added code is an Express.js route definition. When a GET request is made to the root path ("/"), the provided arrow function is executed. The function takes two parameters, request and response. The console.log(request) statement logs the incoming request object to the console for debugging or inspection purposes. Subsequently, the response.status(200).send('Welcome To MERN Stack Tutorial') sets the HTTP status code to 200 OK and sends the specified message, "Welcome To MERN Stack Tutorial," as the response to the client. This code snippet represents a standard approach in Express for handling a root route, where a successful response with a welcome message is provided to the client._
