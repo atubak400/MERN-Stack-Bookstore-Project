@@ -78,5 +78,19 @@ app.get('/', (request, response) => {
 
 ```
 ![npm run dev](./img/10.png)
+![add Mongodb](./img/11.png)
 
 _The added code is an Express.js route definition. When a GET request is made to the root path ("/"), the provided arrow function is executed. The function takes two parameters, request and response. The console.log(request) statement logs the incoming request object to the console for debugging or inspection purposes. Subsequently, the response.status(200).send('Welcome To MERN Stack Tutorial') sets the HTTP status code to 200 OK and sends the specified message, "Welcome To MERN Stack Tutorial," as the response to the client. This code snippet represents a standard approach in Express for handling a root route, where a successful response with a welcome message is provided to the client._
+
+
+## Add Mongodb and Mongoose to your Application
+
+
+![add Mongodb](./img/12.png)
+![add Mongodb](./img/13.png)
+![add Mongodb](./img/14.png)
+![add Mongodb](./img/15.png)
+![add Mongodb](./img/16.png)
+![add Mongodb](./img/17.png)
+![add Mongodb](./img/18.png)
+![add Mongodb](./img/19.png)
