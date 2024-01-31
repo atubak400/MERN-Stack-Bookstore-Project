@@ -244,7 +244,7 @@ app.post('/books', async (request, response) => {
 
 _this route is responsible for handling the creation of new book entries, ensuring that the necessary fields are present, and responding appropriately to success or failure in the book creation process._
 
-> Step 16: Explanation `app.use(express.json());`
+> Step 16: Explanation of `app.use(express.json());`
 - _The middleware app.use(express.json()) is necessary to enable the Express application to parse JSON-encoded request bodies. When a client sends a POST or PUT request with data in the request body, that data is typically transmitted in JSON format. Without the JSON middleware, the Express application would not automatically parse and make this data available in the request.body object. By using express.json(), the application is equipped to automatically parse incoming JSON data and populate request.body with the appropriate JavaScript object, facilitating easy access and manipulation of the data within route handlers. This middleware is essential for handling JSON data in a clean and efficient manner, ensuring that developers can seamlessly work with JSON payloads in their routes._
 
 
@@ -270,3 +270,57 @@ _createdAt: "2024-01-26T20:41:47.831Z" (timestamp indicating when the book was c
 _updatedAt: "2024-01-26T20:41:47.831Z" (timestamp indicating when the book was last updated)_
 __v: 0 (version number, often used with MongoDB)
 _This response indicates that the book was successfully saved in your database, and the server responded with the details of the newly created book._
+
+
+> Step 16: Add a route to GET All Books from the database
+
+```
+// Route for Get All Books from the database
+app.get('/books', async (request, response) => {
+  try {
+    // Attempt to fetch all books from the database using the Book model
+    const books = await Book.find({});
+
+    // If successful, respond with a JSON object containing the count and data of the books
+    return response.status(200).json({ count: books.length, data: books });
+
+  } catch (error) {
+    // If an error occurs during the database operation, log the error message
+    console.log(error.message);
+
+    // Respond with a 500 Internal Server Error status and an error message in the JSON format
+    return response.status(500).send({ message: error.message });
+  }
+});
+```
+
+> Step 17: Create a new request on Postman and choose GET as the method.  Enter http://localhost:3000/books in the URL bar. Click Send.
+
+![book model](./img/27.png)
+
+- The image above shows that GET request was successful, and all books were fetched. The resulting JSON represents the response from a server. The response includes a "count" field, indicating the number of books in the "data" array. In this case, there is one book in the array. Each book is represented as an object with properties such as "_id" (a unique identifier), "title," "author," "publishYear," "createdAt" (timestamp of creation), "updatedAt" (timestamp of the last update), and "__v" (version key used by Mongoose). This structured data allows for clear and organized communication between the server and the client, facilitating the display and utilization of book information in an application.
+
+
+> Step 18: Add a route for Getting one specific Book by its ID
+
+```
+app.get('/books/:id', async (request, response) => {
+  try {
+    const { id } = request.params;
+    const book = await Book.findById(id);
+
+    if (!book) {
+      return response.status(404).json({ message: 'Book not found' });
+    }
+
+    return response.status(200).json(book);
+  } catch (error) {
+    console.error(error.message);
+    response.status(500).send({ message: 'Internal Server Error' });
+  }
+});
+```
+
+> Step 19: Create a new request on Postman and choose GET as the method.  Enter http://localhost:3000/books/<id-goes-here> in the URL bar. Click Send.
+
+![book model](./img/28.png)
