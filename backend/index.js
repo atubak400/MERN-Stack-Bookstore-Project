@@ -42,6 +42,42 @@ app.post('/books', async (request, response) => {
   }
 });
 
+// Route for Get All Books from the database
+app.get('/books', async (request, response) => {
+  try {
+    // Attempt to fetch all books from the database using the Book model
+    const books = await Book.find({});
+
+    // If successful, respond with a JSON object containing the count and data of the books
+    return response.status(200).json({ count: books.length, data: books });
+
+  } catch (error) {
+    // If an error occurs during the database operation, log the error message
+    console.log(error.message);
+
+    // Respond with a 500 Internal Server Error status and an error message in the JSON format
+    return response.status(500).send({ message: error.message });
+  }
+});
+
+// Route for Getting one specific Book by its ID
+app.get('/books/:id', async (request, response) => {
+  try {
+    const { id } = request.params;
+    const book = await Book.findById(id);
+
+    if (!book) {
+      return response.status(404).json({ message: 'Book not found' });
+    }
+
+    return response.status(200).json(book);
+  } catch (error) {
+    console.error(error.message);
+    response.status(500).send({ message: 'Internal Server Error' });
+  }
+});
+
+
 mongoose.connect(mongoDBURL)
 .then(() => {
   console.log('App connected to the database');
